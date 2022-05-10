@@ -2,15 +2,25 @@ const inquirer = require('inquirer');
 
 const fs = require('fs');
 
-const generatePage = require('./src/page-template');
+const generatePage = require('./dist/page-template');
 
-// const pageHTML = generatePage(name, github);
+const pageHTML = generatePage(name, github);
 
-// fs.writeFile('./index.html', pageHTML, err => {
-//   if (err) throw err;
+fs.writeFile('./dist/index.html', pageHTML, err =>{
+  if(err){
+    console.log(err);
+    return;
+  }
+  console.log('Page created! Check out index.html in this directory to see it!');
 
-//   console.log('Portfolio complete! Check out index.html to see the output!');
-// });
+  fs.copyFile('./src/style.css', './dist/style.css', err => {
+    if(err){
+      console.log(err);
+      return;
+    }
+    console.log('Style sheet copied successfully!');
+  });
+});
 
 const promptUser = () => {
 
